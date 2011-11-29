@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuaLanguage2010", "LuaLanguage\VS2010\LuaLanguage2010.csproj", "{83ED6267-7BE9-4A9C-9B42-EB75B8EAEB23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuaGrammar", "LuaLanguage\Grammar\LuaGrammar.csproj", "{84337F70-5528-457C-BF51-140328BA7C15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "010.Irony.2010", "Irony\Irony\010.Irony.2010.csproj", "{0AA4B5FC-3D96-4E02-97A6-8BCBF52C30A6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		TestGrammar|Any CPU = TestGrammar|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83ED6267-7BE9-4A9C-9B42-EB75B8EAEB23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83ED6267-7BE9-4A9C-9B42-EB75B8EAEB23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83ED6267-7BE9-4A9C-9B42-EB75B8EAEB23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83ED6267-7BE9-4A9C-9B42-EB75B8EAEB23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83ED6267-7BE9-4A9C-9B42-EB75B8EAEB23}.TestGrammar|Any CPU.ActiveCfg = Release|Any CPU
+		{83ED6267-7BE9-4A9C-9B42-EB75B8EAEB23}.TestGrammar|Any CPU.Build.0 = Release|Any CPU
+		{84337F70-5528-457C-BF51-140328BA7C15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84337F70-5528-457C-BF51-140328BA7C15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84337F70-5528-457C-BF51-140328BA7C15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84337F70-5528-457C-BF51-140328BA7C15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84337F70-5528-457C-BF51-140328BA7C15}.TestGrammar|Any CPU.ActiveCfg = Release|Any CPU
+		{84337F70-5528-457C-BF51-140328BA7C15}.TestGrammar|Any CPU.Build.0 = Release|Any CPU
+		{0AA4B5FC-3D96-4E02-97A6-8BCBF52C30A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AA4B5FC-3D96-4E02-97A6-8BCBF52C30A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AA4B5FC-3D96-4E02-97A6-8BCBF52C30A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AA4B5FC-3D96-4E02-97A6-8BCBF52C30A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AA4B5FC-3D96-4E02-97A6-8BCBF52C30A6}.TestGrammar|Any CPU.ActiveCfg = Release|Any CPU
+		{0AA4B5FC-3D96-4E02-97A6-8BCBF52C30A6}.TestGrammar|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

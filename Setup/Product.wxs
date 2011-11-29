@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="Lua for Visual Studio" Language="1033" Version="1.0.0.2" Manufacturer="Shaun Seckman" UpgradeCode="e8bf1ddc-8a06-4bda-9840-940d3d820574">
+    <Package InstallerVersion="200" Compressed="yes" />
+
+    <Media Id="1" Cabinet="data.cab" EmbedCab="yes" />
+    
+    <!-- Upgrade support -->
+    <Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
+    <Upgrade Id="e8bf1ddc-8a06-4bda-9840-940d3d820574">
+      <UpgradeVersion Minimum="1.0.0.0" Maximum="1.0.0.0" Property="PREVIOUSVERSIONSINSTALLED" IncludeMinimum="yes" IncludeMaximum="yes" />
+    </Upgrade>
+    <!-- end upgrade support -->
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+          <Directory Id="INSTALLLOCATION" Name="Lua for Visual Studio">
+            <Component Id="ProductComponent" Guid="3a00144a-c640-42f2-a078-5334c7bf8660">
+              <!-- Install core files here -->
+              <File Id="File_LuaLanguage.dll" Source="$(var.PROJECT09OUTPUT)/LuaLanguage.dll"/>
+              <File Id="File_LuaGrammar.dll" Source="$(var.PROJECT09OUTPUT)/LuaLanguage.Grammar.dll"/>
+              <File Id="File_Irony.dll" Source="$(var.PROJECT09OUTPUT)/Irony.dll"/>
+              <File Id="File_Lua.ico" Source="Lua.ico"/>
+              <?include $(var.PROJECT09OUTPUT)/LuaLanguage.wxi ?>
+            </Component>
+
+            <!-- Lua file associations -->
+            <Component Id="AssociateLuaFiles2008" Guid="A3761954-9EDE-448b-8BA7-05B1C0B943D8">
+              <ProgId Id="LuaScript.lua" Description="Lua script" Icon="File_Lua.ico">
+                <Extension Id="lua" ContentType='application/text'>
+                  <Verb Id="open" TargetProperty="VS90DEVENV" Command="Open" Argument='/edit "%1"' />
+                </Extension>
+              </ProgId>
+              <Registry Id='LuaIcon1' Root='HKCR' Key='.lua' Action='write'
+  Type='string' Value='LuaScript.lua' />
+              <Registry Id='LuaIcon2' Root='HKCR' Key='LuaScript.lua' Action='write'
+                Type='string' Value='Lua script' />
+              <Registry Id='LuaIcon3' Root='HKCR' Key='LuaScript.lua\DefaultIcon' Action='write'
+  Type='string' Value='[INSTALLLOCATION]Lua.ico' />
+            </Component>
+          </Directory>
+      </Directory>
+      <Directory Id="VS90_ROOT_FOLDER">
+        <Directory Id="Common7" Name="Common7">
+          <Directory Id="IDE" Name="IDE">
+            <Directory Id="NewScriptItems" Name="NewScriptItems">
+              <Component Id="VS9ScriptItemsComponent" Guid="EBC7EBC5-1909-48f1-BE0F-E4497F0BC8F1">
+                <File Source="ItemTemplates/LuaScript.ico" />
+                <File Source="ItemTemplates/LuaScript.lua" />
+                <File Source="ItemTemplates/LuaScript.vsdir" />
+              </Component>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+         
+    <Feature Id="ProductFeature" Title="Lua Editor for Visual Studio 2008" Level="1" AllowAdvertise="no" Absent="disallow">
+      <ComponentRef Id="ProductComponent" />
+      <ComponentRef Id="VS9ScriptItemsComponent"/>
+    </Feature>
+
+    <Feature Id="AssociateLuaFiles" Title="Associate Lua Files" Description="Associate *.Lua with Visual Studio 2008" Level="1" AllowAdvertise="no">
+      <ComponentRef Id="AssociateLuaFiles2008"/>
+    </Feature>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+    <PropertyRef Id="VS90_ROOT_FOLDER" />
+    <CustomActionRef Id="VS90Setup"/>
+    <UIRef Id="WixUI_FeatureTree" />
+    <Icon Id="Lua.ico" SourceFile="Lua.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="Lua.ico" />
+
+    <InstallExecuteSequence>
+      <RemoveExistingProducts Before="InstallInitialize" />
+      <Custom Action="VS90Setup" After="InstallFiles"/>
+    </InstallExecuteSequence>
+  </Product>
+</Wix>

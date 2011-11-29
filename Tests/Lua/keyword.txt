@@ -1,0 +1,15 @@
+﻿-- _G
+print() --打印
+-- table
+table.sort(t,func) 	--排序
+table.insert(t,v,index) --插入
+table.maxn(t)		--size
+-- file
+file:close()
+file:write()
+os:time()
+os:exec()
+os.date()
+-- UserObj
+UserObj:GetName()
+UserObj:GetId()

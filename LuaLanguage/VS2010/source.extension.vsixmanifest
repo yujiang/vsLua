@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
+    <Identifier Id="1f16ae0f-52a6-45ca-b08b-f8f0564b04db">
+        <Name>Lua Language</Name>
+        <Author>Shaun Seckman</Author>
+        <Version>1.0</Version>
+        <Description xml:space="preserve">Lua language support for Visual Studio.
+
+Lua is a powerful, fast, lightweight, embeddable scripting language.
+http://www.lua.org
+</Description>
+        <Locale>1033</Locale>
+        <MoreInfoUrl>http://vslua.codeplex.com</MoreInfoUrl>
+        <License>license.txt</License>
+        <Icon>Lua.ico</Icon>
+        <InstalledByMsi>false</InstalledByMsi>
+        <SupportedProducts>
+            <VisualStudio Version="10.0">
+                <Edition>Ultimate</Edition>
+                <Edition>Premium</Edition>
+                <Edition>Pro</Edition>
+                <Edition>IntegratedShell</Edition>
+            </VisualStudio>
+        </SupportedProducts>
+        <SupportedFrameworkRuntimeEdition MinVersion="4.0" MaxVersion="4.0" />
+    </Identifier>
+    <References />
+    <Content>
+        <MefComponent>|%CurrentProject%|</MefComponent>
+    </Content>
+</Vsix>
