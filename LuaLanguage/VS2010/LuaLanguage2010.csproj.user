@@ -3,11 +3,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <StartAction>Program</StartAction>
     <StartProgram>C:\Program Files\Microsoft Visual Studio 10.0\Common7\IDE\devenv.exe</StartProgram>
-    <StartArguments>/rootsuffix EXP</StartArguments>
+    <StartArguments>C:\Lib\lua\test.lua /rootsuffix EXP</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <StartAction>Program</StartAction>
-    <StartProgram>C:\Program Files\Microsoft Visual Studio 10.0\Common7\IDE\devenv.exe</StartProgram>
-    <StartArguments>C:\Lib\lua\test.lua /rootsuffix EXP</StartArguments>
+    <StartProgram>c:\Program Files\Microsoft Visual Studio 10.0\Common7\IDE\devenv.exe</StartProgram>
+    <StartArguments>c:\lib\lua\test.lua /rootsuffix EXP /log</StartArguments>
   </PropertyGroup>
 </Project>

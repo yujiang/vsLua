@@ -65,6 +65,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="EnvDTE">
@@ -123,12 +124,23 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classification\LuaClassificationFormat.cs" />
     <Compile Include="Classification\LuaClassificationType.cs" />
     <Compile Include="Classification\LuaClassifier.cs" />
     <Compile Include="Classification\LuaSyntaxErrorTagger.cs" />
+    <Compile Include="help.cs" />
     <Compile Include="Intellisense\LuaCompletionController.cs" />
     <Compile Include="Intellisense\LuaCompletionSource.cs" />
     <Compile Include="Intellisense\LuaOutliner.cs" />
+    <Compile Include="Intellisense\LuaQuickInfoSource.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Intellisense\QuickInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Intellisense\QuickInfoControllerProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="LuaTokenTypes.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>

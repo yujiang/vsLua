@@ -801,3 +801,4 @@ RegisterSortOptions();
 RefreshPager(true);
 UpdateSortOptionsDisplay();
 UpdateSortOrder();
+

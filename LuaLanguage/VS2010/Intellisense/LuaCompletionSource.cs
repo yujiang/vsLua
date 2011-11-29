@@ -27,23 +27,18 @@ namespace LuaLanguage
         private ITextBuffer _buffer;
         private bool _disposed = false;
 
+        //each table functions
+
         public LuaCompletionSource(ITextBuffer buffer)
         {
-            _buffer = buffer;
+            _buffer = buffer;         
         }
 
         public void AugmentCompletionSession(ICompletionSession session, IList<CompletionSet> completionSets)
         {
             if (_disposed)
                 throw new ObjectDisposedException("LuaCompletionSource");
-
-            List<Completion> completions = new List<Completion>()
-            {
-                new Completion("Lua!"),
-                new Completion("Lua."),
-                new Completion("Lua?")
-            };
-            
+         
             ITextSnapshot snapshot = _buffer.CurrentSnapshot;
             var triggerPoint = (SnapshotPoint)session.GetTriggerPoint(snapshot);
 
@@ -53,14 +48,73 @@ namespace LuaLanguage
             var line = triggerPoint.GetContainingLine();
             SnapshotPoint start = triggerPoint;
 
-            while (start > line.Start && !char.IsWhiteSpace((start - 1).GetChar()))
+            var word = start;
+            word -= 1;
+            var ch = word.GetChar();
+
+            List<Completion> completions = new List<Completion>();
+
+            if (ch == '.' || ch == ':' || ch == '_') //for table search
             {
-                start -= 1;
+                while (word > line.Start && Help.is_word_char((word - 1).GetChar()))
+                {
+                    word -= 1;
+                }
+                String w = snapshot.GetText(word.Position,start - 1 - word);
+                if (ch == '_')
+                {
+                    if (!FillWord(w,completions))
+                        return;
+                }
+                else
+                {
+                    if (!FillTable(w,ch,completions))
+                        return;
+                }
             }
-
+            else
+                return;
+            if (ch == '_')
+            {
+                while (start > line.Start && !char.IsWhiteSpace((start - 1).GetChar()))
+                {
+                    start -= 1;
+                }
+            }
             var applicableTo = snapshot.CreateTrackingSpan(new SnapshotSpan(start, triggerPoint), SpanTrackingMode.EdgeInclusive);
+            var cs = new CompletionSet("All", "All", applicableTo, completions, null);
+            completionSets.Add(cs);
+            //session.SelectedCompletionSet = cs;
+        }
 
-            completionSets.Add(new CompletionSet("All", "All", applicableTo, completions, Enumerable.Empty<Completion>()));
+        public bool FillWord(String word, List<Completion> completions)
+        {
+            List<string> l;
+            if (Help.Instance.TryGetIdentifiers(word, out l))
+            {
+                foreach (var tf in l)
+                {
+                    //completions.Add(new Completion(tf.GetTableNext(),tf.GetFunction(),null,null,null));
+                    completions.Add(new Completion(tf));
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public bool FillTable(String word, char dot, List<Completion> completions)
+        {
+            List<TableFunction> l;
+            if (Help.Instance.TryGetTableFuncs(word,dot,out l))
+            {
+                foreach (var tf in l)
+                {
+                    //completions.Add(new Completion(tf.GetTableNext(),tf.GetFunction(),null,null,null));
+                    completions.Add(new Completion(tf.GetTableNext()));
+                }
+                return true;
+            }
+            return false;
         }
 
         public void Dispose()

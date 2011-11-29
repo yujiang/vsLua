@@ -63,20 +63,31 @@ namespace LuaLanguage.Classification
                 count ++;
                 if (error.Location.Line <= endLineNumber && error.Location.Line >= startLineNumber)
                 {
-                    int length = Math.Max(error.Length, 1);
-                    length = Math.Min(length, 100);
-                    length = Math.Min(currentSnapshot.Length - error.Location.Position - 1, length);
-
                     var line = currentSnapshot.GetLineFromLineNumber(error.Location.Line);
                     var startPosition = error.Location.Position;
 
+                    int length = error.Length;
+                    if (length == 0)
+                    {
+                        length = 1;
+                        startPosition -= 1;
+                    }
+                    else
+                    {
+                        length = Math.Min(length, 100);
+                        length = Math.Min(currentSnapshot.Length - error.Location.Position - 1, length);
+                    }
+
                     var msg = error.ValueString;
                     if (count == currentErrors.Count() && msgParse != "")
-                        msg = msgParse;                                            
+                        msg = msgParse;
 
-                    yield return new TagSpan<LuaErrorTag>(
-                        new SnapshotSpan(currentSnapshot, startPosition, length),
-                        new LuaErrorTag(msg));
+                    if (currentSnapshot.Length >= startPosition + length)
+                    {
+                        yield return new TagSpan<LuaErrorTag>(
+                            new SnapshotSpan(currentSnapshot, startPosition, length),
+                            new LuaErrorTag(msg));
+                    }
                 }
             }
         }
@@ -103,10 +114,11 @@ namespace LuaLanguage.Classification
             if (parseTree.HasErrors())
             {
                 var tok = parseTree.Tokens.Last();
-                if (tok.Length != 0)
-                    errorTokens.Add(tok);
-                else
-                    errorTokens.Add(parseTree.Tokens[parseTree.Tokens.Count - 2]);
+                errorTokens.Add(tok);
+                //if (tok.Length != 0)
+                //    errorTokens.Add(tok);
+                //else //it is EOF error so before the end(use -2)
+                //    errorTokens.Add(parseTree.Tokens[parseTree.Tokens.Count - 2]);
                 msgParse = parseTree.ParserMessages[0].ToString();
             }
             else
@@ -129,7 +141,7 @@ namespace LuaLanguage.Classification
             if (delayTimer != null)
                 delayTimer.Dispose();
 
-            delayTimer = new Timer(o => this.ReParse(), null, 1000, Timeout.Infinite);
+            delayTimer = new Timer(o => this.ReParse(), null, 500, Timeout.Infinite);
         }
 
         #region IDisposable Members

@@ -1,0 +1,26 @@
+The origin of vsLua at http://vslua.codeplex.com/
+I just do few work to make it run under vs2010, include:
+
+1. fix some bug of error tag and outline tag
+2. make table and function colored
+3. code completion and quick info (when input '.',':','_')
+and you should put the keyword.txt and my_keyword.txt at c:/libs/lua/
+keyword's format is like:
+
+-- _G
+print() --write to console
+-- table
+table.sort(t,func) 	
+table.insert(t,v,index) 
+table.maxn(t)		
+-- file
+file:close()
+file:write()
+
+for compile the project :
+you should install VS2010 sdk http://www.microsoft.com/download/en/details.aspx?id=21835
+
+This is my first project of c#, so there must be some errors.
+
+
+yujiang.(yu.jiang.163@gmail.com)

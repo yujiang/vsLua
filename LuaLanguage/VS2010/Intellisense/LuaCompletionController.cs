@@ -99,7 +99,7 @@ namespace LuaLanguage
                     {
                         case VSConstants.VSStd2KCmdID.TYPECHAR:
                             char ch = GetTypeChar(pvaIn);
-                            if (ch == '_' || ch == '.' || ch == ':')
+                            if (ch == '.' || ch == ':' || ch == '_')
                                 StartSession();
                             else if (_currentSession != null)
                                 Filter();
@@ -169,7 +169,6 @@ namespace LuaLanguage
             _currentSession.Dismissed += (sender, args) => _currentSession = null;
 
             _currentSession.Start();
-
             return true;
         }
 

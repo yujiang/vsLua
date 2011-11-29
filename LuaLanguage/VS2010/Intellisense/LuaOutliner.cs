@@ -80,7 +80,7 @@ namespace LuaLanguage.Intellisense
             if (delayTimer != null)
                 delayTimer.Dispose();
 
-            delayTimer = new Timer(o => this.ReParse(), null, 1000, Timeout.Infinite);
+            delayTimer = new Timer(o => this.ReParse(), null, 2000, Timeout.Infinite);
         }
 
         void ReParse()

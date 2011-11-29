@@ -19,6 +19,27 @@ namespace LuaLanguage.Classification
         [Name("keyword")]
         internal static ClassificationTypeDefinition luaKeyWord = null;
 
+        /// <summary>
+        /// Defines the "ordinary" classification type.
+        /// </summary>
+        [Export(typeof(ClassificationTypeDefinition))]
+        [Name("table")]
+        internal static ClassificationTypeDefinition luaTable = null;
+
+        /// <summary>
+        /// Defines the "ordinary" classification type.
+        /// </summary>
+        [Export(typeof(ClassificationTypeDefinition))]
+        [Name("function")]
+        internal static ClassificationTypeDefinition luaFunction = null;
+
+        /// <summary>
+        /// Defines the "ordinary" classification type.
+        /// </summary>
+        [Export(typeof(ClassificationTypeDefinition))]
+        [Name("const")]
+        internal static ClassificationTypeDefinition luaConst = null;
+
         #endregion
     }
 }

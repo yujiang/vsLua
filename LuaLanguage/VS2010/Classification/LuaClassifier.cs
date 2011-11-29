@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Language.StandardClassification;
 using System.Threading;
+//using LuaLanguage.help;
 
 namespace LuaLanguage.Classification
 {
@@ -40,6 +41,7 @@ namespace LuaLanguage.Classification
         }
     }
 
+
     /// <summary>
     /// This is effectively the replacement to the LineScanner from 2008.
     /// This class must handle very quick processing times during GetTags() 
@@ -58,6 +60,9 @@ namespace LuaLanguage.Classification
         public event EventHandler<SnapshotSpanEventArgs> TagsChanged;
 
         Dictionary<int, int> _lineStates = new Dictionary<int, int>();
+
+        ClassificationTag _funcionTag;
+        ClassificationTag _tableTag;
 
         internal LuaClassifier(ITextBuffer buffer,
                                IClassificationTypeRegistryService typeService)
@@ -79,8 +84,30 @@ namespace LuaLanguage.Classification
             _luaTags[Irony.Parsing.TokenType.Comment]       = BuildTag(typeService, PredefinedClassificationTypeNames.Comment);
 
             _commentTag = BuildTag(typeService, PredefinedClassificationTypeNames.Comment);
+            _funcionTag = BuildTag(typeService, "function");
+            _tableTag = BuildTag(typeService, "table");
 
             InitializeLineStates(_buffer.CurrentSnapshot);
+        }
+
+
+        private bool TryGetTag(Irony.Parsing.Token token, out ClassificationTag tag)
+        {
+            if (token.EditorInfo.Type == Irony.Parsing.TokenType.Identifier)
+            {
+                if (Help.Instance.ContainFunction(token.Text))
+                {
+                    tag = _funcionTag;
+                    return true;
+                }
+                if (Help.Instance.ContainTable(token.Text))
+                {
+                    tag = _tableTag;
+                    return true;
+                }
+                Help.Instance.AddIdentifier(token.Text);
+            }
+            return _luaTags.TryGetValue(token.EditorInfo.Type, out tag);
         }
 
         /// <summary>
@@ -115,7 +142,7 @@ namespace LuaLanguage.Classification
                     int state = 0;
                     _lineStates.TryGetValue(i, out state);
 
-                    var token = _parser.Scanner.VsReadToken(ref state);
+                    Irony.Parsing.Token token = _parser.Scanner.VsReadToken(ref state);
                     while (token != null)
                     {
                         if (token.Category == Irony.Parsing.TokenCategory.Content)
@@ -123,18 +150,15 @@ namespace LuaLanguage.Classification
                             if (token.EditorInfo != null)
                             {
                                 ClassificationTag tag;
-                                if (_luaTags.TryGetValue(token.EditorInfo.Type, out tag))
+                                if (TryGetTag(token, out tag))
                                 {
-
                                     var location = new SnapshotSpan(snapShot, line.Start.Position + token.Location.Position, token.Length);
-                                    yield return new TagSpan<ClassificationTag>(location, tag);
-                                    
+                                    yield return new TagSpan<ClassificationTag>(location, tag);                                  
                                 }
                             }
                         }
                         else if (token.Category == Irony.Parsing.TokenCategory.Comment)
                         {
-
                             var location = new SnapshotSpan(snapShot, line.Start.Position + token.Location.Position, token.Length);
                             yield return new TagSpan<ClassificationTag>(location, _commentTag);
                         }
