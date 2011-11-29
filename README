@@ -1,10 +1,11 @@
 The origin of vsLua at http://vslua.codeplex.com/
 I just do few work to make it run under vs2010, include:
 
-1. fix some bug of error tag and outline tag
-2. make table and function colored
-3. code completion and quick info (when input '.',':','_')
-and you should put the keyword.txt and my_keyword.txt at c:/libs/lua/
+1. update the irony to latest version
+2. fix some bug of error tag and outline tag
+3. make table and function colored
+4. code completion and quick info (when input '.',':','_')
+and you should put the keyword.txt and my_keyword.txt at "c:/libs/lua/"
 keyword's format is like:
 
 -- _G
