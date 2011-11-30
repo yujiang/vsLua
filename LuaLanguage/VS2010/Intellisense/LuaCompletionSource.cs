@@ -63,7 +63,7 @@ namespace LuaLanguage
                 String w = snapshot.GetText(word.Position,start - 1 - word);
                 if (ch == '_')
                 {
-                    if (!FillWord(w,completions))
+                    if (!FillWord(w+"_",completions))
                         return;
                 }
                 else

@@ -48,7 +48,7 @@ namespace OokLanguage
         public OokQ()
         {
             this.DisplayName = "function"; //human readable version of the name
-            this.ForegroundColor = Colors.DeepSkyBlue;
+            this.ForegroundColor = Colors.DarkSlateBlue;
         }
     }
 

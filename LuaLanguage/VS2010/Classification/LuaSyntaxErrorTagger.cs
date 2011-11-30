@@ -75,7 +75,9 @@ namespace LuaLanguage.Classification
                     else
                     {
                         length = Math.Min(length, 100);
-                        length = Math.Min(currentSnapshot.Length - error.Location.Position - 1, length);
+                        var len = currentSnapshot.Length - error.Location.Position - 1;
+                        if (len > 0)
+                            length = Math.Min(len, length);
                     }
 
                     var msg = error.ValueString;
