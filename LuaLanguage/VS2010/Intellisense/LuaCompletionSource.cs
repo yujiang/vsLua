@@ -76,7 +76,7 @@ namespace LuaLanguage
                 return;
             if (ch == '_')
             {
-                while (start > line.Start && !char.IsWhiteSpace((start - 1).GetChar()))
+                while (start > line.Start && Help.is_word_char((start - 1).GetChar()))
                 {
                     start -= 1;
                 }
@@ -94,7 +94,6 @@ namespace LuaLanguage
             {
                 foreach (var tf in l)
                 {
-                    //completions.Add(new Completion(tf.GetTableNext(),tf.GetFunction(),null,null,null));
                     completions.Add(new Completion(tf));
                 }
                 return true;
@@ -109,8 +108,8 @@ namespace LuaLanguage
             {
                 foreach (var tf in l)
                 {
-                    //completions.Add(new Completion(tf.GetTableNext(),tf.GetFunction(),null,null,null));
-                    completions.Add(new Completion(tf.GetTableNext()));
+                    completions.Add(new Completion(tf.GetTableNext(), tf.GetFunctionParam(), null, null, null));
+                    //completions.Add(new Completion(tf.GetTableNext()));
                 }
                 return true;
             }

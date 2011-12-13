@@ -12,19 +12,36 @@ namespace LuaLanguage
         {
             line = l;
             int i = line.IndexOf('.');
+            int j = line.IndexOf(':');
             if (i == -1)
-                i = line.IndexOf(':');
+                i = j;
+            else if(j == -1)
+                j = i;
+            if (i > j)
+                i = j;
 
             table = i;
             param = line.IndexOf('(',i+1);
             if (param != -1)
             {
+                //MR.get_option(m,func,_index) --得到选项
                 comment = line.IndexOf(')', param + 1);
                 if (comment == -1)
                     param = -1;
+                else
+                    comment += 1;
             }
             else
-                comment = -1;
+            {
+                //MU.MONEY_YILIANG = 1 --银两
+                comment = line.IndexOf('=');
+                //if (comment != -1)
+                  //  comment = comment - 1;
+            }
+        }
+        public bool is_const_var()
+        {
+            return param == -1 && comment != -1;
         }
 
         public string line;
@@ -61,6 +78,13 @@ namespace LuaLanguage
             if (param == -1)
                 return "";
             return line.Substring(param, comment - param);
+        }
+        public string GetFunctionParam()
+        {
+            int start = table + 1;
+            if (comment == -1)
+                return line.Substring(start);
+            return line.Substring(start, comment - start);
         }
         int comment;
         public string GetComment()
@@ -105,8 +129,8 @@ namespace LuaLanguage
             //_luaTableFunction["string"] = new List<string>() { "byte", "char", "dump", "find", "format", "gmatch", "gsub", "len", "lower", "match", "rep", "reverse", "sub", "upper", };
             //_luaTableFunction["table"] = new List<string>() { "concat", "sort", "maxn", "remove", "insert", };
 
-            add_dict_by_file(_luaTableFunctionOri, "keyword.txt");
-            add_dict_by_file(_luaTableFunctionOri, "my_keyword.txt");
+            add_dict_by_file(_luaTableFunctionOri, "keyword.lua");
+            add_dict_by_file(_luaTableFunctionOri, "my_keyword.lua");
 
             _funcions = new HashSet<string>();
             _tables = new HashSet<string>();

@@ -54,17 +54,24 @@ namespace LuaLanguage.Intellisense
                 if (region.StartLine <= endLineNumber &&
                     region.EndLine >= startLineNumber)
                 {
-                    var startLine = currentSnapshot.GetLineFromLineNumber(region.StartLine);
-                    var endLine = currentSnapshot.GetLineFromLineNumber(region.EndLine);
+                    var n = currentSnapshot.LineCount;
+                    if (region.StartLine >= 0 && region.StartLine < n && region.EndLine >= 0 && region.EndLine < n)
+                    {
+                        var startLine = currentSnapshot.GetLineFromLineNumber(region.StartLine);
+                        var endLine = currentSnapshot.GetLineFromLineNumber(region.EndLine);
 
-                    var startPosition = startLine.Start.Position + region.StartOffset;
-                    var length = (endLine.Start.Position + region.EndOffset) - startPosition;
+                        var startPosition = startLine.Start.Position + region.StartOffset;
+                        var length = (endLine.Start.Position + region.EndOffset) - startPosition;
 
-                    //the region starts at the beginning of the "[", and goes until the *end* of the line that contains the "]".
-                    yield return new TagSpan<IOutliningRegionTag>(
-                        new SnapshotSpan(currentSnapshot, 
-                            startLine.Start.Position + region.StartOffset, length),
-                        new OutliningRegionTag(false, false, ellipsis, String.Empty));
+                        //the region starts at the beginning of the "[", and goes until the *end* of the line that contains the "]".
+                        if (length > 0 && currentSnapshot.Length >= startLine.Start.Position + region.StartOffset + length)
+                        {
+                            yield return new TagSpan<IOutliningRegionTag>(
+                            new SnapshotSpan(currentSnapshot,
+                                startLine.Start.Position + region.StartOffset, length),
+                            new OutliningRegionTag(false, false, ellipsis, String.Empty));
+                        }
+                    }
                 }
             }
         }

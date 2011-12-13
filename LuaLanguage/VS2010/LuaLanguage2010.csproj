@@ -161,7 +161,6 @@
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
-    <None Include="test.lua" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />
