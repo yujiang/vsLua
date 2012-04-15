@@ -57,7 +57,8 @@ namespace LuaLanguage
                 return '.';
             return line[table];
         }
-        int next;
+--        //int next;
+        --
         public string GetTableNext()
         {
             if (table < 0)
